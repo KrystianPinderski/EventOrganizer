@@ -1,8 +1,9 @@
 import axios from 'react-native-axios';
+const LocalHost = require('../../LocalHost')
 export default class ApiHandler {
     static getAxios(){
         return axios.create({
-            baseURL:'http://62.133.134.122:3000'
+            baseURL: LocalHost
         })
     }
     static login = async ()=>{
