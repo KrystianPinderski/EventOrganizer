@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
     View,
     Text,
     TouchableOpacity,
 } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import ApiHandler from '../API/ApiHandler';
 
-export default class AppButton extends Component {
+export default class AppButton extends PureComponent {
 
     constructor(props) {
         super(props);
@@ -37,7 +36,7 @@ const styles = EStyleSheet.create({
     touchableOpacity: {
         paddingVertical: 12,
         paddingHorizontal: 24,
-        backgroundColor: '#FFFF00',
+        backgroundColor: '$buttonColor',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 8,
