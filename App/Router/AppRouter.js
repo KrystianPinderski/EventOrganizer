@@ -14,7 +14,7 @@ export default class AppRouter extends PureComponent {
                         key="login"
                         component={Login}
                         title="Event Organizer"
-                        
+                        initial
                     />
                     <Scene
                         key="addUser"
@@ -26,7 +26,7 @@ export default class AppRouter extends PureComponent {
                         component={MainScreen}
                         title={"Welcome"}
                         hideNavBar
-                        initial
+                        
                     />
                     <Scene
                         key="addEvent"
