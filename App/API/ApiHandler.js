@@ -25,4 +25,23 @@ export default class ApiHandler {
             throw err;
         }
     }
+    static addEvent = async (title,date,organizer,city,description,tags)=>{
+        try{
+            let apiResponse = await ApiHandler.getAxios().post("/Event",{title,date,organizer,city,description,tags})
+            console.log(apiResponse.data)
+            return apiResponse.data;
+        }catch(err){
+            console.log("AddEvent Error.",err);
+            throw err;
+        }
+    }
+    static getEvents = async (token)=>{
+        try{
+            let apiResponse = await ApiHandler.getAxios().get("/Event",{headers:{authorization:'Bearer '+token}})
+            return apiResponse.data;
+        }catch(err){
+            console.log("GetEvents Error.",err);
+            throw err;
+        }
+    }
 }

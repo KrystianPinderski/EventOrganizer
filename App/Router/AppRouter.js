@@ -3,7 +3,8 @@ import { Router, Scene } from 'react-native-router-flux';
 import AddUser from '../Components/AddUser/AddUser';
 import Login from '../Components/Login/Login';
 import MainScreen from '../Components/MainScreen/MainScreen';
-import AddEvent from '../Components/AddEvent/AddEvent';
+import AddEvent from '../Components/Event/AddEvent';
+import TagsEvent from '../Components/Event/TagsEvent';
 export default class AppRouter extends PureComponent {
     render() {
         return (
@@ -13,7 +14,7 @@ export default class AppRouter extends PureComponent {
                         key="login"
                         component={Login}
                         title="Event Organizer"
-                        initial
+                        
                     />
                     <Scene
                         key="addUser"
@@ -24,11 +25,19 @@ export default class AppRouter extends PureComponent {
                         key="mainScreen"
                         component={MainScreen}
                         title={"Welcome"}
+                        hideNavBar
+                        initial
                     />
                     <Scene
                         key="addEvent"
                         component={AddEvent}
                         title={"Add event"}
+
+                    />
+                    <Scene
+                        key="eventsByTag"
+                        component={TagsEvent}
+                        title={"Find by tag"}
                         
                     />
                 </Scene>

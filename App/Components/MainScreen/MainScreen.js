@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import {
     View,
+    ScrollView
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Actions } from 'react-native-router-flux';
@@ -17,10 +18,9 @@ export default class MainScreen extends PureComponent {
     }
     async componentWillMount() {
         try {
-            let value = JSON.parse(await AsyncStorage.getItem("User"))
-            console.log(value)
-            if (value !== null) {
-                this.setState({ userInfo: value })
+            let userData = JSON.parse(await AsyncStorage.getItem("User"))
+            if (userData !== null) {
+                this.setState({ userInfo: userData })
             }
         } catch (e) {
             console.log(e)
@@ -36,6 +36,9 @@ export default class MainScreen extends PureComponent {
 
     goToAddEvent = () => {
         Actions.addEvent();
+    }
+    goToEventsByTag = ()=>{
+        Actions.eventsByTag();
     }
 
     logout = () => {
@@ -55,17 +58,25 @@ export default class MainScreen extends PureComponent {
 
     render() {
         return (
-            <View style={styles.container}>
+            <ScrollView style={styles.container}>
+                {/*TODO ScrollView*/}
                 <View style={styles.itemContainer}>
                     {this.admin()}
+                    <MainScreenItem title="Find by Tags"
+                        onPress={this.goToEventsByTag}
+                    />
                     <MainScreenItem title="Settings"
                         onPress={this.goToSettings}
                     />
+                    <MainScreenItem title="Settings"
+                        onPress={this.goToSettings}
+                    />
+                    
                     <MainScreenItem title="Logout"
                         onPress={this.logout}
                     />
                 </View>
-            </View>
+            </ScrollView>
         );
     }
 }
@@ -75,11 +86,11 @@ const styles = EStyleSheet.create({
         flex: 1,
     },
     itemContainer: {
-        padding: '$padding',
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         alignItems: 'flex-start',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        marginVertical:15
     }
 
 });

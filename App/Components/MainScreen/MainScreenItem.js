@@ -38,13 +38,14 @@ const styles = EStyleSheet.create({
     touchableItem: {
         width: 130,
         height: 130,
-        borderRadius: 15,
+        borderRadius: 10,
         backgroundColor: "red",
         justifyContent: 'center',
         alignItems: 'center',
-        margin:5
+        marginVertical:20
     },
     touchableItemText: {
-        fontSize: 25
+        fontSize: 15,
+        flexWrap:'wrap'
     }
 });
