@@ -41,8 +41,8 @@ const styles = EStyleSheet.create({
         alignItems: 'flex-start',
     },
     input: {
-        width:200,
-        padding: 5,
+        width:250,
+        paddingVertical: 5,
         marginBottom: 15,
         marginTop:0,
         borderBottomColor:"$inputUnderlineColor",

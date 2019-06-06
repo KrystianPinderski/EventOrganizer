@@ -29,19 +29,25 @@ export default class extends PureComponent {
     signIn = async () => {
         const { login, password, type, adress, companyName, KRSNumber, NIPNumber, REGONNumber } = this.state
         if (type === "admin") {
-            await ApiHandler.signIn(login, password, type, adress, companyName, KRSNumber, NIPNumber, REGONNumber)
-                .then(function (response) {
-                    if (response.status === 201) {
-                        Actions.login();
-                        return alert("Added Admin.")
-                    }
-                }).catch(function (err) {
-                    switch (err.response.status) {
-                        case 404:
-                            return alert("User not found.")
-                        default: alert("sth goes wrong.")
-                    }
-                })
+            try {
+                await ApiHandler.signIn(login, password, type, adress, companyName, KRSNumber, NIPNumber, REGONNumber)
+                    .then(function (response) {
+                        if (response.status === 201) {
+                            Actions.login();
+                            return alert("Added Admin.")
+                        }
+                    }).catch(function (err) {
+                        switch (err.response.status) {
+                            case 404:
+                                return alert("User not found.")
+                            default: alert("sth goes wrong.")
+                        }
+                    })
+            } catch (err) {
+                console.log("ERRRORRRRR");
+                throw err;
+            }
+
         } else {
             await ApiHandler.signIn(login, password, type).then(function (response) {
                 if (response.status === 201) {
@@ -61,6 +67,7 @@ export default class extends PureComponent {
         if (this.state.type === "admin") {
             return (
                 <View>
+                    {/* TODO Ramka prawo gora lewo taki sam odstep*/}
                     <AppTextInput
                         title="Adress:"
                         onChangeText={(adress) => this.setState({ adress })}

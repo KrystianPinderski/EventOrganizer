@@ -24,7 +24,7 @@ export default class Login extends PureComponent {
             if (response.status == 200) {
                 let { token, result } = response
                 try {
-                    await AsyncStorage.setItem('User', JSON.stringify({ token, name: result.name, password: result.password, type: result.type }))
+                    await AsyncStorage.setItem('User', JSON.stringify({ token, name: result.name, password: result.password, type: result.type, companyName:result.companyName }))
                     Actions.replace("mainScreen", { response });
                 } catch (e) {
                     console.log(e)
@@ -66,7 +66,7 @@ export default class Login extends PureComponent {
                 <View style={styles.bottomHelpersContainer}>
                     <TouchableOpacity style={styles.signIn} onPress={this.signIn}>
                         <Text>Dont have account yet? </Text>
-                        <Text>SignIn now !</Text>
+                        <Text>Sign In now!</Text>
                     </TouchableOpacity>
 
                     <View style={styles.phoneCall}>
