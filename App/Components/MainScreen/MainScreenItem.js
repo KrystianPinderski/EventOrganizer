@@ -11,41 +11,66 @@ export default class MainScreenItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            
+
         };
     }
-    
-    componentWillReceiveProps(nextProps) {
-        
-    }
-    
+
     render() {
         return (
             <View >
                 <TouchableOpacity
-                        style={styles.touchableItem}
-                        onPress={this.props.onPress}
-                    >
+                    style={styles.touchableItem}
+                    onPress={this.props.onPress}
+                >
+                    <View style={[styles.touchableIcon,{backgroundColor:this.props.iconBackground}]}></View>
+                    <View style={[styles.touchableCenter, { backgroundColor: this.props.arrowBackground }]}>
                         <Text style={styles.touchableItemText}>{this.props.title}</Text>
-                    </TouchableOpacity>
+                    </View>
+                    <View style={[styles.triangle, { borderBottomColor: this.props.arrowBackground }]}></View>
+                </TouchableOpacity>
             </View>
         );
     }
-    
-}
 
+}
+const containerSize = 50;
+const containerWidth = 250;
 const styles = EStyleSheet.create({
     touchableItem: {
-        width: 130,
-        height: 130,
-        borderRadius: 10,
-        backgroundColor: "red",
+        flexDirection: 'row',
+        width: containerWidth,
+        height: containerSize,
+        marginVertical: 10
+    },
+    touchableCenter: {
+        width: containerWidth - (containerSize * 2),
+        height: containerSize,
+        backgroundColor: 'red',
         justifyContent: 'center',
-        alignItems: 'center',
-        marginVertical:20
     },
     touchableItemText: {
+        alignSelf: 'center',
         fontSize: 15,
-        flexWrap:'wrap'
+        flexWrap: 'wrap',
+        color: "white"
+    },
+    touchableIcon: {
+        width: containerSize,
+        height: containerSize,
+        backgroundColor: "blue"
+    },
+    triangle: {
+        width: 0,
+        height: 0,
+        backgroundColor: 'transparent',
+        borderStyle: 'solid',
+        borderLeftWidth: 0.5 * containerSize,
+        borderRightWidth: 0.5 * containerSize,
+        borderBottomWidth: containerSize,
+        borderLeftColor: 'transparent',
+        borderRightColor: 'transparent',
+        transform: [
+            { rotate: '90deg' }
+        ]
     }
 });

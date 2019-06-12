@@ -14,12 +14,13 @@ export default class AppRouter extends PureComponent {
                         key="login"
                         component={Login}
                         title="Event Organizer"
-                        initial
+                        
                     />
                     <Scene
                         key="addUser"
                         component={AddUser}
                         title="Add User"
+                        
                     />
                     <Scene
                         key="mainScreen"
@@ -32,13 +33,13 @@ export default class AppRouter extends PureComponent {
                         key="addEvent"
                         component={AddEvent}
                         title={"Add event"}
-
+                        
                     />
                     <Scene
                         key="eventsByTag"
                         component={TagsEvent}
                         title={"Find by tag"}
-                        
+                        initial
                     />
                 </Scene>
             </Router>

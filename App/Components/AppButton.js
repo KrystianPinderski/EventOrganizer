@@ -17,9 +17,9 @@ export default class AppButton extends PureComponent {
         return (
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
-                    style={styles.touchableOpacity}
+                    style={[styles.touchableOpacity,{backgroundColor:this.props.backgroundColor?this.props.backgroundColor:EStyleSheet.value('$buttonColor')}]}
                     onPress={this.props.onPress}>
-                    <Text style={styles.buttonText}>{this.props.text}</Text>
+                    <Text style={[styles.buttonText,{color:this.props.textColor}]}>{this.props.text}</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -36,7 +36,6 @@ const styles = EStyleSheet.create({
     touchableOpacity: {
         paddingVertical: 12,
         paddingHorizontal: 24,
-        backgroundColor: '$buttonColor',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 8,

@@ -18,7 +18,7 @@ export default class extends PureComponent {
         this.state = {
             login: '',
             password: '',
-            type: '',
+            type: 'user',
             adress: '',
             companyName: '',
             KRSNumber: '',
@@ -34,7 +34,7 @@ export default class extends PureComponent {
                     .then(function (response) {
                         if (response.status === 201) {
                             Actions.login();
-                            return alert("Added Admin.")
+                            return alert("Added User.")
                         }
                     }).catch(function (err) {
                         switch (err.response.status) {
@@ -117,7 +117,7 @@ export default class extends PureComponent {
                     <Text>User Type:</Text>
                     <Picker
                         selectedValue={this.state.type}
-                        style={{ height: 50, width: 200 }}
+                        style={styles.pickerStyle}
                         onValueChange={(itemValue, itemIndex) =>
                             this.setState({ type: itemValue })
                         }>
@@ -139,5 +139,8 @@ const styles = EStylesSheet.create({
         flexDirection: 'column',
         alignSelf: 'center',
         alignItems: 'center',
+    },pickerStyle:{
+        height: 50, 
+        width: '$inputWidth'
     }
 });

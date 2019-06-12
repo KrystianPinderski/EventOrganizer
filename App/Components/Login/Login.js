@@ -2,7 +2,8 @@ import React, { PureComponent } from 'react';
 import {
     View,
     Text,
-    TouchableOpacity
+    TouchableOpacity,
+    ImageBackground
 } from 'react-native';
 import AppButton from '../AppButton';
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -10,6 +11,7 @@ import ApiHandler from '../../API/ApiHandler';
 import { Actions } from 'react-native-router-flux';
 import AppTextInput from '../AppTextInput';
 import AsyncStorage from '@react-native-community/async-storage';
+import Background from '../../Images/BGLogin.jpg';
 
 export default class Login extends PureComponent {
     constructor(props) {
@@ -24,7 +26,7 @@ export default class Login extends PureComponent {
             if (response.status == 200) {
                 let { token, result } = response
                 try {
-                    await AsyncStorage.setItem('User', JSON.stringify({ token, name: result.name, password: result.password, type: result.type, companyName:result.companyName }))
+                    await AsyncStorage.setItem('User', JSON.stringify({ token, name: result.name, password: result.password, type: result.type, companyName: result.companyName }))
                     Actions.replace("mainScreen", { response });
                 } catch (e) {
                     console.log(e)
@@ -45,7 +47,7 @@ export default class Login extends PureComponent {
 
     render() {
         return (
-            <View style={styles.contentContainer}>
+            <ImageBackground source={Background} style={styles.contentContainer}>
                 <View style={styles.formContainer}>
                     <View style={styles.inputContainer}>
                         <AppTextInput
@@ -65,16 +67,16 @@ export default class Login extends PureComponent {
                 </View>
                 <View style={styles.bottomHelpersContainer}>
                     <TouchableOpacity style={styles.signIn} onPress={this.signIn}>
-                        <Text>Dont have account yet? </Text>
-                        <Text>Sign In now!</Text>
+                        <Text style={styles.textBottom}>Don't have account yet? </Text>
+                        <Text style={styles.textBottom}>Sign In now!</Text>
                     </TouchableOpacity>
 
                     <View style={styles.phoneCall}>
-                        <Text>Having trouble?</Text>
-                        <Text>call:XXX-XXX-XXX</Text>
+                        <Text style={styles.textBottom}>Having trouble?</Text>
+                        <Text style={styles.textBottom}>call:XXX-XXX-XXX</Text>
                     </View>
                 </View>
-            </View>
+            </ImageBackground >
         );
     }
 }
@@ -104,6 +106,9 @@ const styles = EStyleSheet.create({
     },
     phoneCall: {
         flex: 1,
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
+    },
+    textBottom: {
+        color: 'white'
     }
 });
