@@ -12,7 +12,7 @@ import AppButton from '../AppButton';
 import Tags from 'react-native-tags';
 import AsyncStorage from '@react-native-community/async-storage';
 import ApiHandler from '../../API/ApiHandler';
-let kolos = []
+let tagsTab = []
 export default class AddEvent extends Component {
 
     constructor(props) {
@@ -23,21 +23,26 @@ export default class AddEvent extends Component {
             organizer: '',
             city: '',
             description: '',
+            link: '',
         };
     }
     sendForm = async () => {
         let user = JSON.parse(await AsyncStorage.getItem("User"))
-        await ApiHandler.addEvent(this.state.title, this.state.date,user.companyName,this.state.city,this.state.description,kolos).then(async function (response) {
-            if (response.status == 201) {
-                alert("Added Event.")
-            }
-        }).catch(function (error) {
-            switch (error.response.status) {
-                case 404:
-                    return alert("User not found.")
-                default: alert("Sth goes wrong.")
-            }
-        });
+        if (this.state.link.toUpperCase().startsWith("HTTPS://WWW") || this.state.link.toUpperCase().startsWith("HTTP://WWW")) {
+            await ApiHandler.addEvent(this.state.title, this.state.date, user.companyName, this.state.city, this.state.description, tagsTab, this.state.link).then(async function (response) {
+                if (response.status == 201) {
+                    alert("Added Event.")
+                }
+            }).catch(function (error) {
+                switch (error.response.status) {
+                    case 404:
+                        return alert("User not found.")
+                    default: alert("Sth goes wrong.")
+                }
+            });
+        }else{
+            alert("Please type good link Http/Https://www.example.com")
+        }
     }
 
     datePicker = async () => {
@@ -86,6 +91,12 @@ export default class AddEvent extends Component {
                         value={this.state.description}
                         placeholder="Add..."
                     />
+                    <AppTextInput
+                        title="Link:"
+                        onChangeText={(link) => { this.setState({ link }) }}
+                        value={this.state.link}
+                        placeholder="Link to event."
+                    />
                     <Text >Tags:</Text>
                     <Tags
                         style={{ flex: 1, flexDirection: 'column', marginVertical: 10 }}
@@ -95,7 +106,7 @@ export default class AddEvent extends Component {
                         }}
                         initialTags={[]}
                         onChangeTags={tags => {
-                            kolos = tags
+                            tagsTab = tags
                         }}
                         maxNumberOfTags={10}
                         tagContainerStyle={{ width: 250, flexDirection: 'row' }}
@@ -126,7 +137,7 @@ const styles = EStyleSheet.create({
     },
     datePicker: {
         backgroundColor: '$buttonColor',
-        width: 250,
+        width: '$inputWidth',
         padding: 10,
         marginVertical: 10,
         marginHorizontal: 0
@@ -143,7 +154,7 @@ const styles = EStyleSheet.create({
         paddingHorizontal: 7,
     },
     tagInputStyle: {
-        minWidth: 250,
+        minWidth: '$inputWidth',
         maxHeight: 50,
         marginTop: 0,
         borderBottomColor: "$inputUnderlineColor",

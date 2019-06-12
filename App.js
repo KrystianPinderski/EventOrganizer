@@ -4,9 +4,10 @@ import AppRouter from './App/Router/AppRouter';
 EStyleSheet.build(
   {
     $backgroundColor: '#FFF',
-    $padding: 12,
+    $padding: 4,
     $buttonColor:'#30D5C8',
-    $inputUnderlineColor:'#FF00FF'
+    $inputUnderlineColor:'#FF00FF',
+    $inputWidth:180
   }
 );
 export default class App extends Component {
