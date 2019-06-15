@@ -5,8 +5,8 @@ EStyleSheet.build(
   {
     $backgroundColor: '#FFF',
     $padding: 4,
-    $buttonColor:'#30D5C8',
-    $inputUnderlineColor:'#FF00FF',
+    $buttonColor:'#00BE2A',
+    $inputUnderlineColor:'#00BE2A',
     $inputWidth:180
   }
 );

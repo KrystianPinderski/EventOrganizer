@@ -26,14 +26,8 @@ export default class ApiHandler {
         }
     }
     static addEvent = async (title,date,organizer,city,description,tags,link)=>{
-        try{
             let apiResponse = await ApiHandler.getAxios().post("/Event",{title,date,organizer,city,description,tags,link})
-            console.log(apiResponse.data)
             return apiResponse.data;
-        }catch(err){
-            console.log("AddEvent Error.",err);
-            throw err;
-        }
     }
     static getEvents = async (token)=>{
         try{
