@@ -14,7 +14,7 @@ export default class AppRouter extends PureComponent {
                         key="login"
                         component={Login}
                         title="Event Organizer"
-                        
+                        initial
                     />
                     <Scene
                         key="addUser"
@@ -39,7 +39,7 @@ export default class AppRouter extends PureComponent {
                         key="eventsByTag"
                         component={TagsEvent}
                         title={"Find by tag"}
-                        initial
+                        
                     />
                 </Scene>
             </Router>
