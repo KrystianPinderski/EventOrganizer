@@ -10,6 +10,7 @@ import AppTextInput from '../AppTextInput';
 import AppButton from '../AppButton';
 import ApiHandler from '../../API/ApiHandler';
 import { Actions } from 'react-native-router-flux';
+import {getStatus} from '../../CheckConnection';
 
 export default class extends PureComponent {
 
@@ -28,40 +29,46 @@ export default class extends PureComponent {
     }
     signIn = async () => {
         const { login, password, type, adress, companyName, KRSNumber, NIPNumber, REGONNumber } = this.state
-        if (type === "admin") {
-            try {
-                await ApiHandler.signIn(login, password, type, adress, companyName, KRSNumber, NIPNumber, REGONNumber)
-                    .then(function (response) {
-                        if (response.status === 201) {
-                            Actions.login();
-                            return alert("Added User.")
-                        }
-                    }).catch(function (err) {
-                        switch (err.response.status) {
-                            case 404:
-                                return alert("User not found.")
-                            default: alert("sth goes wrong.")
-                        }
-                    })
-            } catch (err) {
-                console.log("ERRRORRRRR");
-                throw err;
-            }
-
+        let connection = await getStatus()
+        if (!connection) {
+            alert("No internet connection.")
         } else {
-            await ApiHandler.signIn(login, password, type).then(function (response) {
-                if (response.status === 201) {
-                    Actions.login();
-                    return alert("Added user.")
+            if (type === "admin") {
+                try {
+                    await ApiHandler.signIn(login, password, type, adress, companyName, KRSNumber, NIPNumber, REGONNumber)
+                        .then(function (response) {
+                            if (response.status === 201) {
+                                Actions.login();
+                                return alert("Added User.")
+                            }
+                        }).catch(function (err) {
+                            switch (err.response.status) {
+                                case 404:
+                                    return alert("User not found.")
+                                default: alert("sth goes wrong.")
+                            }
+                        })
+                } catch (err) {
+                    console.log("ERRRORRRRR");
+                    throw err;
                 }
-            }).catch(function (error) {
-                switch (error.response.status) {
-                    case 404:
-                        return alert("User not found.")
-                    default: alert("Sth goes wrong.")
-                }
-            });
+
+            } else {
+                await ApiHandler.signIn(login, password, type).then(function (response) {
+                    if (response.status === 201) {
+                        Actions.login();
+                        return alert("Added user.")
+                    }
+                }).catch(function (error) {
+                    switch (error.response.status) {
+                        case 404:
+                            return alert("User not found.")
+                        default: alert("Sth goes wrong.")
+                    }
+                });
+            }
         }
+
     }
     addAdmin = () => {
         if (this.state.type === "admin") {
@@ -99,7 +106,6 @@ export default class extends PureComponent {
         return;
     }
     render() {
-        console.log(this.state.type)
         return (
             <ScrollView contentContainerStyle={styles.scrollView}>
                 <View>
@@ -139,8 +145,8 @@ const styles = EStylesSheet.create({
         flexDirection: 'column',
         alignSelf: 'center',
         alignItems: 'center',
-    },pickerStyle:{
-        height: 50, 
+    }, pickerStyle: {
+        height: 50,
         width: '$inputWidth'
     }
 });

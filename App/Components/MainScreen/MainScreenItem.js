@@ -34,7 +34,7 @@ export default class MainScreenItem extends Component {
 
 }
 const containerSize = 50;
-const containerWidth = 250;
+const containerWidth = 260;
 const styles = EStyleSheet.create({
     touchableItem: {
         flexDirection: 'row',

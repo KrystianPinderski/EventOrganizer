@@ -19,7 +19,7 @@ export default class AppTextInput extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={[styles.text,{color: this.props.textColor}]}>{this.props.title}</Text>
+                <Text style={[styles.text, { color: this.props.textColor }]}>{this.props.title}</Text>
                 <TextInput
                     {...this.props}
                     style={[
