@@ -17,9 +17,9 @@ export default class AppButton extends PureComponent {
         return (
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
-                    style={[styles.touchableOpacity,{backgroundColor:this.props.backgroundColor?this.props.backgroundColor:EStyleSheet.value('$buttonColor')}]}
+                    style={[styles.touchableOpacity, { backgroundColor: this.props.backgroundColor ? this.props.backgroundColor : EStyleSheet.value('$buttonColor') }]}
                     onPress={this.props.onPress}>
-                    <Text style={[styles.buttonText,{color:this.props.textColor}]}>{this.props.text}</Text>
+                    <Text style={[styles.buttonText, { color: this.props.textColor }]}>{this.props.text}</Text>
                 </TouchableOpacity>
             </View>
         );

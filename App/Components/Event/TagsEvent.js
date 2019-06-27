@@ -7,7 +7,6 @@ import {
     ImageBackground,
     Linking
 } from 'react-native';
-import ApiHandler from '../../API/ApiHandler';
 import AsyncStorage from '@react-native-community/async-storage';
 import AppTextInput from '../AppTextInput';
 import AppButton from '../AppButton';
@@ -15,14 +14,13 @@ import { _ } from 'lodash';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Search from '../../Images/Search.jpg';
 import moment from 'moment';
-let events = [];
+var momentTZ = require('moment-timezone');
 export default class TagsEvent extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            loading: true,
-            tag: 'Kij',
+            tag: '',
             toShow: [],
             showDetails: false,
             pressedIndex: 0,
@@ -31,47 +29,36 @@ export default class TagsEvent extends Component {
         };
     }
 
-    async componentWillMount() {
-        let userData = JSON.parse(await AsyncStorage.getItem("User"))
-        try {
-            await ApiHandler.getEvents(userData.token)
-                .then(function (response) {
-                    if (response.status === 200) {
-                        events = response.result
-                    }
-                }).catch(function (err) {
-                    switch (err.response.status) {
-                        case 404:
-                            return alert("User not found.")
-                        case 401:
-                            return alert("Please log in again.")
-                        default: alert("sth goes wrong.")
-                    }
-                })
-        } catch (err) {
-            console.log(err)
-        }
-        this.setState({ events, loading: false })
+    componentWillMount() {
     }
 
-    showList = () => {
+    showList = async () => {
         if (this.state.showDetails === true) {
             this.setState({ showDetails: false })
         }
+
         let toFind = this.state.tag;
-        let tabToSearch = this.state.events;
+        let tabToSearch = JSON.parse(await AsyncStorage.getItem("Events"))
         let resultTab = [];
+
         if (this.state.toShow.length > 0) {
             this.setState({ toShow: [] })
         }
-        _.forEach(tabToSearch, function (value, key) {
-            if (_.includes(value.tags, toFind)) {
-                let dateCompare=moment(value.date).isSameOrAfter(new Date())
-                if(dateCompare){
-                    resultTab.push(value)
+
+        _.forEach(tabToSearch.result, function (value, key) {
+            //setting today hour on 00 because setted hour 01 when adding a event.
+            for (i = 0; i < value.tags.length; i++) {
+                if (value.tags[i].toLowerCase().startsWith(toFind.toLowerCase())) {
+                    let europeDate = moment(value.date).tz("Europe/Warsaw", true).format();
+                    let actualDate = new Date().setHours("00")
+                    let dateCompare = moment(europeDate).isSameOrAfter(actualDate)
+                    if (dateCompare) {
+                        resultTab.push(value)
+                    }
                 }
             }
         });
+
         if (resultTab.length > 0) {
             resultTab.sort(function (a, b) {
                 var c = new Date(a.date);
@@ -151,11 +138,6 @@ export default class TagsEvent extends Component {
         }
     }
     render() {
-        if (this.state.loading) {
-            return (
-                <Text >Loading...</Text>
-            )
-        }
         return (
             <ImageBackground source={Search} style={{ flex: 1 }}>
                 <View style={styles.container}>
