@@ -51,7 +51,8 @@ export default class ManageEvents extends Component {
     componentWillReceiveProps(nextProps) {
 
     }
-    async updateList() {
+
+    async getEvents() {
         try {
             await ApiHandler.getEvents(userData.token)
                 .then(function (response) {
@@ -71,6 +72,9 @@ export default class ManageEvents extends Component {
         } catch (err) {
             console.log(err)
         }
+    }
+    async updateList() {
+        await this.getEvents()
         await this.showList()
     }
     async deleteEvent(id) {
@@ -118,8 +122,8 @@ export default class ManageEvents extends Component {
                     }}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
                             <View >
-                                <Text style={[{ fontSize: 16 }, styles.text]}>
-                                    City: {events.item.city}
+                                <Text style={[{ fontSize: 16, marginBottom: 10 }, styles.text]}>
+                                    Place : {"\n" + events.item.city + ", " + events.item.street}
                                 </Text>
                                 <Text style={[{ fontSize: 16 }, styles.text]}>
                                     Organizer: {events.item.organizer}
