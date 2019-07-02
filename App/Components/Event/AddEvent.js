@@ -38,7 +38,6 @@ export default class AddEvent extends Component {
     sendForm = async () => {
         let userData = JSON.parse(await AsyncStorage.getItem("User"))
         const { link, title, date, city, street, description, } = this.state
-        console.log("Send Form Date: ", date)
         let resultTab;
         await ApiHandler.getCityPosition(city, street).then(function (response) {
             resultTab = response
