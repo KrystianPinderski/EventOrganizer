@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.4.1",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "moment": "^2.24.0",
     "node": "^12.2.0",
     "python": "0.0.4",
